@@ -1,0 +1,13 @@
+{
+  "name": "google-blog",
+  "version": "1.0.0",
+  "description": "A sample client-server to demonstrate how to enable authentication with Google as an OIDC identity provider",
+  "scripts": {
+    "tmux-create-session": "tmux -2 new -s google-blog -d -x 120 -y 120; tmux split-window -hf",
+    "tmux-start-backend": "tmux send-keys \"cd ./nodejs-backend; yarn run start\" C-m",
+    "tmux-start-frontend": "tmux select-pane -t 0; tmux send-keys \"cd ./react-frontend; yarn run start\" C-m",
+    "start": "yarn run tmux-create-session && yarn run tmux-start-backend && yarn run tmux-start-frontend && tmux attach"
+  },
+  "author": "april.eggers@fdiinc.com",
+  "license": "ISC"
+}
