@@ -1,53 +1,27 @@
-import React, { Component } from "react";
-import request from "axios";
-import { DataGrid } from "@mui/x-data-grid";
+import React, { Component } from 'react'
+import { Card, CardContent, Typography } from '@mui/material'
+import { endpointSearch } from './serviceHelpers'
+
+const searchEndpoint = '/secured?'
+
 class SecuredContent extends Component {
-  state = {};
-  /**
-   * Given a connector load the actual midtier connection
-   *
-   * @param {string} connectorType  Connector information used to access midtier
-   */
-  loadConnector = async () => {
-    try {
-      let axiosInstance;
-      if (!this.state.axiosInstance) {
-        axiosInstance = request.create({
-          baseURL: "http://localhost:3000",
-        });
-      }
-      axiosInstance.defaults.headers.common["Authorization"] =
-        "Bearer " + sessionStorage.getItem("SessionToken");
-      this.setState({ axiosInstance: axiosInstance });
-      // return Object.assign(connector.midtier, urlConfig.endpoints)
-    } catch (error) {
-      console.error(
-        "Caught an error in the serviceHelpers.loadConnector",
-        error
-      );
-    }
-  };
+  state = {}
   componentDidMount = async () => {
-    if (!this.state.axiosInstance) {
-      await this.loadConnector();
+    try {
+      let results = await endpointSearch(searchEndpoint)
+      this.setState({ securedContent: results })
+    } catch (err) {
+      console.error('caught an error trying to load secure content', err)
     }
-    let results = await this.state.axiosInstance({
-      method: "get",
-      url: "/users",
-    });
-    this.setState({ securedContent: results });
-  };
+  }
   render() {
-    if (!this.state.securedContent || this.state?.securedContent?.length === 0)
-      return null;
-    console.log("state", this.state);
+    if (!this.state.securedContent) return null
     return (
-      <DataGrid
-        rows={this.state.securedContent.data.rows}
-        columns={this.state.securedContent.data.colDef}
-      />
-    );
+      <Card elevation={3}>
+        <Typography sx={{ p: 1, m: 1 }}>{this.state.securedContent}</Typography>
+      </Card>
+    )
   }
 }
 
-export default SecuredContent;
+export default SecuredContent
