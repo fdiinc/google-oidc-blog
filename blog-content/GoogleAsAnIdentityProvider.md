@@ -4,7 +4,7 @@ Recently, the Innovations Studio at Flatirons Digital Innovations has been hard 
 
 Digital Hub has a configuration-based React user interface and a NodeJS backend server that manages the flow of data between the datastore and the React frontend. While the Google OIDC documentation is extensive, I didn't find anything that provided an end-to-end example, detailing the steps for authenticating both the client and the server. There were subtleties in both the client and server setup that were only discovered after hours of stepping through in a debugger and reading very old forum posts. The following is a summary of lessons learned that will hopefully, save you from those long, painful battles.
 
-The complete repository is available at
+The complete repository is available at https://github.com/fdiinc/google-oidc-blog
 
 ## Prerequisites
 
